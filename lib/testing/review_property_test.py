@@ -1,6 +1,6 @@
-from employee import Employee
-from department import Department
-from review import Review
+from ..employee import Employee
+from ..department import Department
+from ..review import Review
 import pytest
 
 

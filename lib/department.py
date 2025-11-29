@@ -1,5 +1,5 @@
 # lib/department.py
-from __init__ import CURSOR, CONN
+from lib import CURSOR, CONN
 
 
 class Department:
@@ -159,7 +159,7 @@ class Department:
         sql = """
             SELECT *
             FROM departments
-            WHERE name is ?
+            WHERE name = ?
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
@@ -167,14 +167,14 @@ class Department:
 
     def employees(self):
         """Return list of employees associated with current department"""
-        from employee import Employee
+        from lib.employee import Employee
         sql = """
             SELECT * FROM employees
             WHERE department_id = ?
         """
-        CURSOR.execute(sql, (self.id,),)
+        result = CURSOR.execute(sql, (self.id,))
 
-        rows = CURSOR.fetchall()
+        rows = result.fetchall()
         return [
             Employee.instance_from_db(row) for row in rows
         ]

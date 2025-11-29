@@ -1,5 +1,5 @@
-from __init__ import CONN, CURSOR
-from department import Department
+from .. import CONN, CURSOR
+from ..department import Department
 import pytest
 
 

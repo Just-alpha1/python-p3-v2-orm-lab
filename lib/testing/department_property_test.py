@@ -1,4 +1,4 @@
-from department import Department
+from ..department import Department
 import pytest
 
 

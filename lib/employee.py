@@ -1,6 +1,7 @@
 # lib/employee.py
-from __init__ import CURSOR, CONN
-from department import Department
+from lib import CURSOR, CONN
+from lib.department import Department
+from typing import List
 
 class Employee:
 
@@ -179,7 +180,7 @@ class Employee:
         sql = """
             SELECT *
             FROM employees
-            WHERE name is ?
+            WHERE name = ?
         """
 
         row = CURSOR.execute(sql, (name,)).fetchone()
@@ -187,4 +188,21 @@ class Employee:
 
     def reviews(self):
         """Return list of reviews associated with current employee"""
-        pass
+        from .review import Review
+        sql = """
+            SELECT *
+            FROM reviews
+            WHERE employee_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Review.instance_from_db(row) for row in rows]
+# Update to lib/employee.py (only the new method; assume the rest is already implemented)
+
+    def reviews(self) -> List["Review"]:
+        from .review import Review
+        sql = """
+            SELECT * FROM reviews
+            WHERE employee_id = ?
+        """
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        return [Review.instance_from_db(row) for row in rows]
